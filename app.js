@@ -1,82 +1,87 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-const lineWidth = document.getElementById("width-range");
+const line_Width = document.getElementById("line-width");
 const color = document.getElementById("color");
-const colorOptions = Array.from(document.getElementsByClassName("color-option"));
-const modeBtn = document.getElementById("mode-btn");
-const removeBtn = document.getElementById("removeAll-btn");
-const eraserBtn = document.getElementById("eraser-btn");
+const colorOptions = Array.from(document.getElementsByClassName("color-options"));
+const fillBtn = document.getElementById("fillBtn");
+const clearBtn = document.getElementById("clearBtn");
+const eraseBtn = document.getElementById("eraseBtn");
+const fileInput = document.getElementById("file");
 
+canvas.width = 700;
+canvas.height = 700;
 
-canvas.width = 800;
-canvas.height = 800;
-ctx.lineWidth = lineWidth.value;
+isPainting = false;
+isFilling = false;
 
-let isPainting = false;
-let isFilling = false;
-
-function onMove(event) {
+function onPainting(event) {
     if (isPainting) {
         ctx.lineTo(event.offsetX, event.offsetY);
         ctx.stroke();
     }
-    ctx.moveTo(event.offsetX, event.offsetY);
+    // ctx.moveTo(event.offsetX, event.offsetY);
 }
-function onMouseDown() {
+function startPainting() {
     isPainting = true;
 }
 function stopPainting() {
     isPainting = false;
     ctx.beginPath();
 }
-function onLineWidthChange(event) {
-    ctx.beginPath();
+function widthChange(event) {
     ctx.lineWidth = event.target.value;
 }
-function onColorChange(event) {
-    ctx.beginPath();
+function colorChange(event) {
+    console.log(event);
     ctx.strokeStyle = event.target.value;
-    ctx.fillStyle = event.target.value;
 }
-function onColorOptionClick(event) {
+function colorOptionsChange(event) {
     ctx.beginPath();
     ctx.strokeStyle = event.target.dataset.color;
     ctx.fillStyle = event.target.dataset.color;
     color.value = event.target.dataset.color;
 }
-function onFillChange() {
+function fillBtnClick() {
     if (isFilling) {
         isFilling = false;
-        modeBtn.innerText = "Fill Mode";
+        fillBtn.innerText = "Fill Mode";
     } else {
         isFilling = true;
-        modeBtn.innerText = "Draw Mode";
+        fillBtn.innerText = "Draw Mode";
     }
-
 }
-function onCanvasClick(event) {
+function canvasClick() {
     if (isFilling) {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 }
-function onRemoveAll() {
+function clearAll() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-function onEraser() {
-    ctx.strokeStyle = "white";
+function eraseBtnClick() {
     isFilling = false;
-    modeBtn.innerText = "Fill Mode";
+    fillBtn.innerText = "Fill Mode";
+    ctx.strokeStyle = "white";
 }
-
-
-canvas.addEventListener("mousemove", onMove);
-canvas.addEventListener("mousedown", onMouseDown);
+function onFileChange(event) {
+    console.dir(event.target);
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.src = url;
+    image.onload = function() {
+        ctx.drawImage(image, 50, 50, 700, 700);
+    }
+}
+canvas.addEventListener("mousemove", onPainting);
+canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", stopPainting);
 canvas.addEventListener("mouseleave", stopPainting);
-canvas.addEventListener("click", onCanvasClick);
-lineWidth.addEventListener("change", onLineWidthChange);
-color.addEventListener("change", onColorChange);
-colorOptions.forEach(color => color.addEventListener("click", onColorOptionClick));
-modeBtn.addEventListener("click", onFillChange);
-removeBtn.addEventListener("click", onRemoveAll);
-eraserBtn.addEventListener("click", onEraser);
+line_Width.addEventListener("change", widthChange);
+color.addEventListener("change", colorChange);
+colorOptions.forEach(color => color.addEventListener("click", colorOptionsChange));
+fillBtn.addEventListener("click", fillBtnClick);
+canvas.addEventListener("click", canvasClick);
+clearBtn.addEventListener("click", clearAll);
+eraseBtn.addEventListener("click", eraseBtnClick);
+fileInput.addEventListener("change", onFileChange);
