@@ -7,12 +7,11 @@ const fillBtn = document.getElementById("fillBtn");
 const clearBtn = document.getElementById("clearBtn");
 const eraseBtn = document.getElementById("eraseBtn");
 const fileInput = document.getElementById("file");
-const textInput = document.getElementById("inputText");
+const textInput = document.getElementById("text");
+const saveBtn = document.getElementById("saveBtn");
 
 canvas.width = 700;
 canvas.height = 700;
-
-ctx.lineCap = "round";
 
 isPainting = false;
 isFilling = false;
@@ -67,26 +66,26 @@ function eraseBtnClick() {
     ctx.strokeStyle = "white";
 }
 function onFileChange(event) {
-    console.dir(event.target);
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
     const image = new Image();
     image.src = url;
-    image.onload = function() {
-        ctx.drawImage(image, 50, 50, 700, 700);
+    image.onload = function () {
+        ctx.drawImage(image, 40,40,300,300);
     }
 }
 function onDoubleClick(event) {
-    ctx.save();
     const text = textInput.value;
-    ctx.lineWidth = 1; 
-    ctx.font = "48px serif";
-    console.log(event.offsetX, event.offsetY);
+    ctx.font = "50px serif";
     ctx.fillText(text, event.offsetX, event.offsetY);
-    ctx.restore();
 }
-
-
+function onSave() {
+    const url = canvas.toDataURL();
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "my Drawing.png";
+    a.click();
+}
 
 canvas.addEventListener("mousemove", onPainting);
 canvas.addEventListener("mousedown", startPainting);
@@ -101,3 +100,4 @@ clearBtn.addEventListener("click", clearAll);
 eraseBtn.addEventListener("click", eraseBtnClick);
 fileInput.addEventListener("change", onFileChange);
 canvas.addEventListener("dblclick", onDoubleClick);
+saveBtn.addEventListener("click", onSave);
