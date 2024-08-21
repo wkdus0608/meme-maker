@@ -7,9 +7,12 @@ const fillBtn = document.getElementById("fillBtn");
 const clearBtn = document.getElementById("clearBtn");
 const eraseBtn = document.getElementById("eraseBtn");
 const fileInput = document.getElementById("file");
+const textInput = document.getElementById("inputText");
 
 canvas.width = 700;
 canvas.height = 700;
+
+ctx.lineCap = "round";
 
 isPainting = false;
 isFilling = false;
@@ -73,6 +76,18 @@ function onFileChange(event) {
         ctx.drawImage(image, 50, 50, 700, 700);
     }
 }
+function onDoubleClick(event) {
+    ctx.save();
+    const text = textInput.value;
+    ctx.lineWidth = 1; 
+    ctx.font = "48px serif";
+    console.log(event.offsetX, event.offsetY);
+    ctx.fillText(text, event.offsetX, event.offsetY);
+    ctx.restore();
+}
+
+
+
 canvas.addEventListener("mousemove", onPainting);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", stopPainting);
@@ -85,3 +100,4 @@ canvas.addEventListener("click", canvasClick);
 clearBtn.addEventListener("click", clearAll);
 eraseBtn.addEventListener("click", eraseBtnClick);
 fileInput.addEventListener("change", onFileChange);
+canvas.addEventListener("dblclick", onDoubleClick);
