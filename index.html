@@ -4,34 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Canvas</title>
+    <title>Canvas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <canvas></canvas>
-    <input type="range" min="1" max="20" value="10" id="line-width">
-    <input type="color" id="color">
-    <div>
-        <div class="color-options" data-color="#1abc9c" style="background-color: #1abc9c;"></div>
-        <div class="color-options" data-color="#3498db" style="background-color: #3498db;"></div>
-        <div class="color-options" data-color="#34495e" style="background-color: #34495e;"></div>
-        <div class="color-options" data-color="#27ae60" style="background-color: #27ae60;"></div>
-        <div class="color-options" data-color="#8e44ad" style="background-color: #8e44ad;"></div>
-        <div class="color-options" data-color="#f1c40f" style="background-color: #f1c40f;"></div>
-        <div class="color-options" data-color="#e74c3c" style="background-color: #e74c3c;"></div>
-        <div class="color-options" data-color="#95a5a6" style="background-color: #95a5a6;"></div>
-        <div class="color-options" data-color="#d35400" style="background-color: #d35400;"></div>
-        <div class="color-options" data-color="#bdc3c7" style="background-color: #bdc3c7;"></div>
-        <div class="color-options" data-color="#2ecc71" style="background-color: #2ecc71;"></div>
-        <div class="color-options" data-color="#e67e22" style="background-color: #e67e22;"></div>
+    <div class="container">
+        <canvas></canvas>
+        <div class="controls">
+            <input type="range" id="line-width" min="1" max="20" value="5">
+            <input type="color" id="color">
+            <div>
+                <div style="background-color: #1abc9c;" data-color="#1abc9c" class="color-options"></div>
+                <div style="background-color: #3498db;" data-color="#3498db" class="color-options"></div>
+                <div style="background-color: #34495e;" data-color="#34495e" class="color-options"></div>
+                <div style="background-color: #27ae60;" data-color="#27ae60" class="color-options"></div>
+                <div style="background-color: #8e44ad;" data-color="#8e44ad" class="color-options"></div>
+                <div style="background-color: #f1c40f;" data-color="#f1c40f" class="color-options"></div>
+                <div style="background-color: #e74c3c;" data-color="#e74c3c" class="color-options"></div>
+                <div style="background-color: #95a5a6;" data-color="#95a5a6" class="color-options"></div>
+                <div style="background-color: #d35400;" data-color="#d35400" class="color-options"></div>
+                <div style="background-color: #bdc3c7;" data-color="#bdc3c7" class="color-options"></div>
+                <div style="background-color: #2ecc71;" data-color="#2ecc71" class="color-options"></div>
+                <div style="background-color: #e67e22;" data-color="#e67e22" class="color-options"></div>
+            </div>
+            <div>
+                <button id="fillBtn">Fill</button>
+                <button id="clearAll">Clear</button>
+                <button id="eraser">Eraser</button>
+            </div>
+            <div>
+                <input type="file" id="file" accept="img/*">
+            </div>
+            <div>
+                <input type="text" placeholder="Something Say" id="text">
+            </div>
+            <button id="saveBtn">Save</button>
+        </div>
     </div>
-    <button id="fillBtn">Fill Mode</button>
-    <button id="clearBtn">Clear All</button>
-    <button id="eraseBtn">Eraser Mode</button>
-    <input type="file" accept="image/*" id="file">
-    <input type="text" placeholder="Write Something" id="text">
-    <button id="saveBtn">Save</button>
 
     <script src="app.js"></script>
 </body>
